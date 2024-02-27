@@ -32,9 +32,15 @@ const smartapp = new SmartApp()
     .enableEventLogging(2) // logs all lifecycle event requests and responses as pretty-printed JSON. Omit in production
     .page('SpotifyControler', (context, page, configData) => {
         page.section('Please select the controler', section => {
+            const ID: string = "alex";
+            const URLTEMPLATE: string = "https://island-highfalutin-string.glitch.me/login"
             section
+              .oauthSetting(ID)
+              .disabled(true)
+              .urlTemplate(URLTEMPLATE)
+           /* section
                 .deviceSetting('speaker')
-                .capabilities(['mediaPlayback'])
+                .capabilities(['mediaPlayback'])*/
         }); 
     })
     // Called for both INSTALLED and UPDATED lifecycle events if there is no separate installed() handler
