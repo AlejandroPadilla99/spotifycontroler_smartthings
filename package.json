@@ -1,0 +1,22 @@
+{
+  "name": "spotify_smartapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sever.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@smartthings/core-sdk": "^8.1.2",
+    "@smartthings/smartapp": "^4.3.2",
+    "axios": "^1.6.7",
+    "express": "^4.18.2",
+    "expresss": "^0.0.0",
+    "request": "^2.88.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21"
+  }
+}
