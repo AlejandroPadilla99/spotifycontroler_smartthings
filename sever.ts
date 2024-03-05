@@ -1,49 +1,24 @@
-import express, {Express, request, Request, Response} from "express";
-import axios, {AxiosRequestConfig} from 'axios'
+import express, {Express, Request, Response} from "express";
 import { SmartApp } from "@smartthings/smartapp";
+import "dotenv/config"
+
+require('dotenv').config();
 
 const app: Express = express();
-const port: number = 3000
+const port: number = process.env.PORT
+const oauth_url: string = process.env.OAUTH_URL
 
-///delete this after to try 
-let data: any = '';
-
-let config: AxiosRequestConfig = {
-  method: 'put',
-  maxBodyLength: Infinity,
-  url: 'https://api.spotify.com/v1/me/player/pause',
-  headers: {
-    'Authorization': 'Bearer '
-  },
-  data: data
-};
-
-function makeRequest() {
-    axios.request(config)
-    .then((response) => {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch((error) => {
-      console.log(error);
-    }); 
-}
-//
 const smartapp = new SmartApp()
-    .enableEventLogging(2) // logs all lifecycle event requests and responses as pretty-printed JSON. Omit in production
+    .enableEventLogging(2)
     .page('SpotifyControler', (context, page, configData) => {
         page.section('Please select the controler', section => {
-            const ID: string = "alex";
-            const URLTEMPLATE: string = "https://island-highfalutin-string.glitch.me/login"
+            const ID: string = "spotify-controler";
             section
               .oauthSetting(ID)
               .disabled(true)
-              .urlTemplate(URLTEMPLATE)
-           /* section
-                .deviceSetting('speaker')
-                .capabilities(['mediaPlayback'])*/
+              .urlTemplate(oauth_url)
         }); 
     })
-    // Called for both INSTALLED and UPDATED lifecycle events if there is no separate installed() handler
     .updated(async (context, updateData) => {
         await context.api.subscriptions.delete()
         await context.api.subscriptions.subscribeToDevices(context.config.speaker, 'Speaker', 'Speaker', 'SpotifyControler');
